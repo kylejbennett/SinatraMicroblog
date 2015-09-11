@@ -4,7 +4,7 @@ require './models'
 
 set :database, 'sqlite3:microdb.sqlite3'
 
-configure(:development){set :database, "sqlite3:blog.sqlite3"}
+configure(:development){set :database, "sqlite3:microdb.sqlite3"}
 
 get "/" do 
 	@posts = Post.all
