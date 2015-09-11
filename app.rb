@@ -4,7 +4,11 @@ require './models'
 
 set :database, 'sqlite3:microdb.sqlite3'
 
+configure(:development){set :database, "sqlite3:blog.sqlite3"}
+
 get "/" do 
+	@posts = Post.all
+	@profiles = Profile.all
 	erb :signin
 end
 
@@ -13,6 +17,7 @@ get "/account" do
 end
 
 get "/feed" do 
+	@post = Post.all
 	erb :feed
 end
 
@@ -29,5 +34,17 @@ get "/post" do
 end
 
 get "/profiles" do 
+	@users = User.all
 	erb :profiles
+end
+
+post "/signin" do
+	u = {
+		:email=> params["email"],
+		:username=> params["username"],
+		:password=> params["password"]
+	}
+	User.create(u)
+	puts @users.inspect
+	erb :post
 end

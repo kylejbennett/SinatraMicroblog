@@ -3,12 +3,15 @@
 #####################
 
 <----------HEADER----------->*/
+body{
+	margin: 0;
+}
 
 header{
 	width: 100%;
 	height: 100px;
 	text-align: center;
-	background-color: rgba(0, 0, 0, .3);
+	background-color: rgba(0, 102, 153, .3);
 }
 
 nav ul{
@@ -18,8 +21,7 @@ nav ul{
 nav li{
 	display: inline;
 	text-align: center;
-	margin-left: 75px;
-	margin-right: 75px;
+	margin-right: 125px;
 }
 
 nav a{
@@ -28,13 +30,17 @@ nav a{
 	text-decoration: none;
 }
 
+nav a:hover{
+	color: #801317;
+}
+
 .clear{
 	clear: both;
 }
 /*<----------FOOTER----------->*/
 
 footer{
-	background-color: rgba(0, 0, 0, .3);
+	background-color: rgba(0, 102, 153, .3);
 	height: 120px;
 	width: 100%;
 	bottom: 0px;
@@ -63,7 +69,7 @@ footer{
 }
 
 .social a:hover{
-	color: lightgray;
+	color: #801317;
 }
 
 p.copy{
@@ -73,10 +79,4 @@ p.copy{
 .social img{
 	width: 50px;
 	height: 50px;
-}
-
-footer p{
-	float: right;
-	margin-right: 50px;
-	font-size: 14pt;
 }
