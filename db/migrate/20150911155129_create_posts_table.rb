@@ -4,7 +4,7 @@ class CreatePostsTable < ActiveRecord::Migration
   		t.string :post_title
   		t.string :post_content, limit: 150
   		t.timestamp :post_time
-  		t.integer :userid
+  		t.integer :user_id
   	end
   end
 end
