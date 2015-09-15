@@ -51,7 +51,12 @@ get "/profiles" do
 	erb :profiles
 end
 
-post "/signin" do
+get "sign-out" do
+	session[:userid] = nil
+	erb :signin
+end
+
+post "/signup" do
 	u = {
 		:email=> params["email"],
 		:username=> params["username"],
@@ -65,8 +70,9 @@ end
 post '/sign-in' do   
 	@user = User.where(username: params[:username]).first   
 	if @user && @user.password == params[:password]     
-		session[:user_id] = @user.id     
-		flash[:notice] = "You've been signed in successfully."   
+		session[:userid] = @user.id     
+		flash[:notice] = "You've been signed in successfully."
+		redirect "/post"   
 	else     
 		flash[:alert] = "There was a problem signing you in."   
 	end   
@@ -74,13 +80,14 @@ post '/sign-in' do
 end
 
 post "/feed" do
-	p = {
-		:post_title=> params["post_title"],
-		:post_content=> params["post_content"],
-		:userid=> params["userid"],
-	}
-	Post.create(p)
-	@posts = Post.all
-	erb :feed
+	@post = Post.new(params)
+	if current_user
+		@post.userid = current_user.id
+	end
+	if @post.save
+		redirect '/'
+	else
+		redirect	'/new-post'
+	end
 end
 
