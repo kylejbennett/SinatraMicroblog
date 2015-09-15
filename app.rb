@@ -28,9 +28,9 @@ get "/account" do
 	erb :account
 end
 
-get "/feed" do 
+get "/feed" do 	
 	@posts = Post.all
-	erb :feed
+	erb :feed	
 end
 
 get "/follow" do 
@@ -42,7 +42,14 @@ get "/loginfail" do
 end
 
 get "/post" do 
-	flash[:notice] = "User signed in successfully."
+	if current_user
+		@posts = Post.all
+		flash[:notice] = "User signed in successfully."
+		erb :feed
+	else
+		flash[:notice] = "Please login or sign up"
+		redirect '/'
+	end
 	erb :post
 end
 
@@ -51,8 +58,9 @@ get "/profiles" do
 	erb :profiles
 end
 
-get "sign-out" do
+get "/sign-out" do
 	session[:userid] = nil
+	flash[:notice] = "You've been signed OUT successfully."
 	erb :signin
 end
 
@@ -62,8 +70,9 @@ post "/signup" do
 		:username=> params["username"],
 		:password=> params["password"]
 	}
-	User.create(u)
-	puts @users.inspect
+	@user = User.create(u)
+	session[:userid] = @user.id 
+	puts @user.id
 	erb :post
 end
 
@@ -80,14 +89,15 @@ post '/sign-in' do
 end
 
 post "/feed" do
-	@post = Post.new(params)
+	
 	if current_user
+		@post = Post.new(params)
 		@post.userid = current_user.id
 	end
 	if @post.save
-		redirect '/'
+		redirect '/feed'
 	else
-		redirect	'/new-post'
+		redirect '/post'
 	end
 end
 
