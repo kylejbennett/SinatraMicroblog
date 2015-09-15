@@ -1,10 +1,22 @@
 require	'sinatra'
 require 'sinatra/activerecord'
 require './models'
+require 'bundler/setup'
+require 'rack-flash'
+
+use Rack::Flash, :sweep => true
 
 set :database, 'sqlite3:microdb.sqlite3'
 
+set :sessions, true
+
 configure(:development){set :database, "sqlite3:microdb.sqlite3"}
+
+def current_user 
+	if session[:userid]
+		@current_user = User.find(session[:userid])
+	end
+end	
 
 get "/" do 
 	@posts = Post.all
@@ -17,7 +29,7 @@ get "/account" do
 end
 
 get "/feed" do 
-	@post = Post.all
+	@posts = Post.all
 	erb :feed
 end
 
@@ -30,6 +42,7 @@ get "/loginfail" do
 end
 
 get "/post" do 
+	flash[:notice] = "User signed in successfully."
 	erb :post
 end
 
@@ -48,3 +61,26 @@ post "/signin" do
 	puts @users.inspect
 	erb :post
 end
+
+post '/sign-in' do   
+	@user = User.where(username: params[:username]).first   
+	if @user && @user.password == params[:password]     
+		session[:user_id] = @user.id     
+		flash[:notice] = "You've been signed in successfully."   
+	else     
+		flash[:alert] = "There was a problem signing you in."   
+	end   
+	redirect "/" 
+end
+
+post "/feed" do
+	p = {
+		:post_title=> params["post_title"],
+		:post_content=> params["post_content"],
+		:userid=> params["userid"],
+	}
+	Post.create(p)
+	@posts = Post.all
+	erb :feed
+end
+

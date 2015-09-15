@@ -1,0 +1,7 @@
+<h1>Recent Posts</h1>
+<hr>
+<% @posts.each do |post|%>
+	<h2><%= post.post_title%></h2>
+	<%= post.post_content%>
+	<hr>
+<% end %>
