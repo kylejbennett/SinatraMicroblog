@@ -1,0 +1,17 @@
+<h1>Profiles</h1>
+
+<hr>
+
+<% @profiles.each do |profile|%>
+	
+	<h2>
+		<%= profile.fname%> <%= profile.lname%> 
+	</h2>
+	<h3>	
+		Location: <%= profile.location%>
+		<br>
+		Age: <%= profile.age%>
+		<br>
+		Occupation: <%= profile.occupation%>
+	</h3>
+<%end%>
