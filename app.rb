@@ -24,7 +24,8 @@ get "/" do
 	erb :signin
 end
 
-get "/account" do 
+get "/account" do
+	@profiles = Profile.all 
 	erb :account
 end
 
@@ -64,6 +65,11 @@ get "/sign-out" do
 	erb :signin
 end
 
+get "/userpage" do
+	@profiles = Profile.all
+	erb :account
+end
+ 
 post "/signup" do
 	u = {
 		:email=> params["email"],
