@@ -33,7 +33,6 @@ GEM
     sinatra-activerecord (2.0.8)
       activerecord (>= 3.2)
       sinatra (~> 1.0)
-    sqlite3 (1.3.10)
     thread_safe (0.3.5)
     tilt (2.0.1)
     tzinfo (1.2.2)
@@ -49,7 +48,6 @@ DEPENDENCIES
   rake
   sinatra
   sinatra-activerecord
-  sqlite3
 
 BUNDLED WITH
    1.10.6
