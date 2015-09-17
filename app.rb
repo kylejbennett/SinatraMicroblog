@@ -6,8 +6,6 @@ require 'rack-flash'
 
 use Rack::Flash, :sweep => true
 
-set :database, 'sqlite3:microdb.sqlite3'
-
 set :sessions, true
 
 configure(:development){set :database, "sqlite3:microdb.sqlite3"}
