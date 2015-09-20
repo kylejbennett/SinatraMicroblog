@@ -16,9 +16,6 @@
 				<a href="/profiles">Blog Community</a>
 			</li>
 			<li>
-				<a href="/follow">My Bloggers</a>
-			</li>
-			<li>
 				<a href="/account">My Account</a>
 			</li>
 			<li>
@@ -29,10 +26,18 @@
 
 </header>
 
-<%=flash[:notice] if flash[:notice] %>
-<%=flash[:alert] if flash[:alert] %>
+<div class="content">
 
-<%= yield%>
+	<div class="notice">
+		<%=flash[:notice] if flash[:notice] %>
+	</div>
+	<div class="alert">
+		<%=flash[:alert] if flash[:alert] %>
+	</div>
+
+	<%= yield%>
+
+</div>
 
 <footer>
 	<div id="foot">

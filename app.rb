@@ -13,6 +13,8 @@ configure(:development){set :database, "sqlite3:microdb.sqlite3"}
 def current_user 
 	if session[:userid]
 		@current_user = User.find(session[:userid])
+	else
+		nil
 	end
 end	
 
@@ -23,12 +25,18 @@ get "/" do
 end
 
 get "/account" do
-	@profiles = Profile.all 
-	erb :account
+	if current_user
+		@user = current_user
+		erb :account
+	else
+		flash[:notice] = "Please login or sign up"
+		redirect '/'
+	end
+	
 end
 
 get "/feed" do 	
-	@posts = Post.all
+	@posts = Post.last(10)
 	erb :feed	
 end
 
@@ -40,16 +48,29 @@ get "/loginfail" do
 	erb :loginfail
 end
 
+get "/edit" do
+	@user = current_user
+	erb :edit
+end
+
+post "/profile/edit" do
+	u = {
+		:email=> params["email"],
+		:username=> params["username"],
+	}
+	current_user.update(u)
+	flash[:notice] = "Profile updated successfully."
+	redirect to '/'
+end
+
 get "/post" do 
 	if current_user
 		@posts = Post.all
-		flash[:notice] = "User signed in successfully."
-		erb :feed
+		erb :post
 	else
 		flash[:notice] = "Please login or sign up"
 		redirect '/'
 	end
-	erb :post
 end
 
 get "/profiles" do 
@@ -63,9 +84,14 @@ get "/sign-out" do
 	erb :signin
 end
 
-get "/userpage" do
-	@profiles = Profile.all
-	erb :account
+get "/users/:id" do
+	begin
+		@user = User.find(params[:id])
+		erb :user_info
+	rescue
+		flash[:notice] = "That user does not exist"
+		redirect "/"
+	end
 end
  
 post "/signup" do
@@ -77,6 +103,7 @@ post "/signup" do
 	@user = User.create(u)
 	session[:userid] = @user.id 
 	puts @user.id
+	flash[:notice] = "You are now logged in"
 	erb :post
 end
 
@@ -88,8 +115,9 @@ post '/sign-in' do
 		redirect "/post"   
 	else     
 		flash[:alert] = "There was a problem signing you in."   
+		redirect "/"
 	end   
-	redirect "/" 
+	 
 end
 
 post "/feed" do
