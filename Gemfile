@@ -7,10 +7,11 @@ gem 'sinatra-activerecord'
 gem 'rake'
 gem 'rack-flash3'
 
-group :development, :test do
-  gem 'sqlite3'
+group :production do
+	gem 'pg', '0.12.2'
 end
 
-group :production do
-	gem 'pg'
+group :development, :test do
+  gem 'sqlite3' '1.3.4'
 end
+
