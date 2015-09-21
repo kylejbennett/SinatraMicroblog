@@ -3,12 +3,19 @@
 #####################
 
 <----------HEADER----------->*/
+body{
+	margin: 0;
+	font-family: 'Istok Web', sans-serif;
+	color: white;
+	background-image: url('04.jpg');
+	background-size: cover;
+}
 
 header{
 	width: 100%;
-	height: 100px;
+	height: 65px;
 	text-align: center;
-	background-color: rgba(0, 0, 0, .3);
+	background-color: #E6DDD1;
 }
 
 nav ul{
@@ -18,8 +25,7 @@ nav ul{
 nav li{
 	display: inline;
 	text-align: center;
-	margin-left: 75px;
-	margin-right: 75px;
+	margin-right: 115px;
 }
 
 nav a{
@@ -28,23 +34,46 @@ nav a{
 	text-decoration: none;
 }
 
+nav a:hover{
+	color: #801317;
+}
+
 .clear{
 	clear: both;
 }
+
+.notice{
+	width: 500px;
+	background-color: white;
+	color: green;
+	text-align: center;
+	margin: 16 auto;
+}
+
+.alert{
+	width: 500px;
+	background-color: white;
+	color: red;
+	text-align: center;
+	margin: 16 auto;
+}
+
+.content{
+	margin-bottom: 100px;
+}
+
 /*<----------FOOTER----------->*/
 
 footer{
-	background-color: rgba(0, 0, 0, .3);
-	height: 120px;
+	height: 76px;
 	width: 100%;
+	background-color: #E6DDD1;
+	position: fixed;
 	bottom: 0px;
-	left: 0px;
-	z-index: 2;
 }
 
 
 #foot{
-	padding-top: 25px;
 	width: 100%;
 	margin: 0 auto;
 	text-align: center;
@@ -57,13 +86,13 @@ footer{
 }
 
 .social a{
-	font-size: 50px;
+	font-size: 42px;
 	color: black;
 	text-decoration: none;
 }
 
 .social a:hover{
-	color: lightgray;
+	color: #801317;
 }
 
 p.copy{
@@ -75,8 +104,89 @@ p.copy{
 	height: 50px;
 }
 
-footer p{
-	float: right;
-	margin-right: 50px;
-	font-size: 14pt;
+.out{
+	font-size: 15pt;
 }
+
+/*############## Sign In/Up ##############*/
+
+form{
+	text-align: center;
+}
+
+form input{
+	width: 200px;
+	height: 25px;
+	border-radius: 5px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+form textarea{
+	width: 400px;
+	height: 100px;
+	border-radius: 5px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+/*############# Feed #############*/
+
+.feed{
+	width: 900px;
+	margin: 0 auto;
+}
+
+.feed h1{
+	text-align: center;
+}
+
+/*############## Community ##############*/
+
+.bloggers{
+	width: 900px;
+	margin: 0 auto;
+}
+
+.bloggers h1{
+	text-align: center;
+}
+
+.bloggers a{
+	color: #E6DDD1;
+}
+
+.bloggers a:hover{
+	color: #801317;
+}
+
+/*############### Account #################*/
+
+.account{
+	width: 900px;
+	margin: 0 auto;
+}
+
+.account h1{
+	text-align: center;
+}
+
+.account a{
+	color: white;
+}
+
+.account a:hover{
+	color: #801317;
+}
+
+/*############ User Info ##############*/
+
+.info{
+	width: 900px;
+	margin: 0 auto;
+}
+
+.info h1{
+	text-align: center;
+}
+

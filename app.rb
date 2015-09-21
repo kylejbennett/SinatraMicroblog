@@ -1,19 +1,47 @@
 require	'sinatra'
 require 'sinatra/activerecord'
 require './models'
+require 'bundler/setup'
+require 'rack-flash'
 
-set :database, 'sqlite3:microdb.sqlite3'
+use Rack::Flash, :sweep => true
+
+set :sessions, true
+
+configure(:development){set :database, "sqlite3:microdb.sqlite3"}
+
+def current_user 
+	if session[:userid]
+		@current_user = User.find(session[:userid])
+	else
+		nil
+	end
+end	
 
 get "/" do 
+	@posts = Post.all
+	@profiles = Profile.all
+	erb :index
+end
+
+get "/sign_in" do
 	erb :signin
 end
 
-get "/account" do 
-	erb :account
+get "/account" do
+	if current_user
+		@user = current_user
+		erb :account
+	else
+		flash[:notice] = "Please login or sign up"
+		redirect "/sign_in"
+	end
+	
 end
 
-get "/feed" do 
-	erb :feed
+get "/feed" do 	
+	@posts = Post.last(10)
+	erb :feed	
 end
 
 get "/follow" do 
@@ -24,10 +52,88 @@ get "/loginfail" do
 	erb :loginfail
 end
 
+get "/edit" do
+	@user = current_user
+	erb :edit
+end
+
+post "/profile/edit" do
+	u = {
+		:email=> params["email"],
+		:username=> params["username"],
+	}
+	current_user.update(u)
+	flash[:notice] = "Profile updated successfully."
+	redirect "/sign_in"
+end
+
 get "/post" do 
-	erb :post
+	if current_user
+		@posts = Post.all
+		erb :post
+	else
+		flash[:notice] = "Please login or sign up"
+		redirect "/sign_in"
+	end
 end
 
 get "/profiles" do 
+	@users = User.all
 	erb :profiles
 end
+
+get "/sign-out" do
+	session[:userid] = nil
+	flash[:notice] = "You've been signed OUT successfully."
+	redirect "/sign_in"
+end
+
+get "/users/:id" do
+	begin
+		@user = User.find(params[:id])
+		erb :user_info
+	rescue
+		flash[:notice] = "That user does not exist"
+		redirect "/sign_in"
+	end
+end
+ 
+post "/signup" do
+	u = {
+		:email=> params["email"],
+		:username=> params["username"],
+		:password=> params["password"]
+	}
+	@user = User.create(u)
+	session[:userid] = @user.id 
+	puts @user.id
+	flash[:notice] = "You are now logged in"
+	erb :post
+end
+
+post '/sign-in' do   
+	@user = User.where(username: params[:username]).first   
+	if @user && @user.password == params[:password]     
+		session[:userid] = @user.id     
+		flash[:notice] = "You've been signed in successfully."
+		redirect "/post"   
+	else     
+		flash[:alert] = "There was a problem signing you in."   
+		redirect "/sign_in"
+	end   
+	 
+end
+
+post "/feed" do
+	
+	if current_user
+		@post = Post.new(params)
+		@post.userid = current_user.id
+	end
+	if @post.save
+		redirect '/feed'
+	else
+		redirect '/post'
+	end
+end
+
