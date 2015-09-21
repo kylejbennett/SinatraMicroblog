@@ -5,7 +5,7 @@
 <----------HEADER----------->*/
 body{
 	margin: 0;
-	font-family: sans-serif;
+	font-family: 'Istok Web', sans-serif;
 	color: white;
 	background-image: url('04.jpg');
 	background-size: cover;
@@ -25,7 +25,7 @@ nav ul{
 nav li{
 	display: inline;
 	text-align: center;
-	margin-right: 125px;
+	margin-right: 115px;
 }
 
 nav a{
@@ -104,6 +104,10 @@ p.copy{
 	height: 50px;
 }
 
+.out{
+	font-size: 15pt;
+}
+
 /*############## Sign In/Up ##############*/
 
 form{
@@ -149,7 +153,7 @@ form textarea{
 }
 
 .bloggers a{
-	color: white;
+	color: #E6DDD1;
 }
 
 .bloggers a:hover{

@@ -21,6 +21,10 @@ end
 get "/" do 
 	@posts = Post.all
 	@profiles = Profile.all
+	erb :index
+end
+
+get "/sign_in" do
 	erb :signin
 end
 
@@ -30,7 +34,7 @@ get "/account" do
 		erb :account
 	else
 		flash[:notice] = "Please login or sign up"
-		redirect '/'
+		redirect "/sign_in"
 	end
 	
 end
@@ -60,7 +64,7 @@ post "/profile/edit" do
 	}
 	current_user.update(u)
 	flash[:notice] = "Profile updated successfully."
-	redirect to '/'
+	redirect "/sign_in"
 end
 
 get "/post" do 
@@ -69,7 +73,7 @@ get "/post" do
 		erb :post
 	else
 		flash[:notice] = "Please login or sign up"
-		redirect '/'
+		redirect "/sign_in"
 	end
 end
 
@@ -81,7 +85,7 @@ end
 get "/sign-out" do
 	session[:userid] = nil
 	flash[:notice] = "You've been signed OUT successfully."
-	erb :signin
+	redirect "/sign_in"
 end
 
 get "/users/:id" do
@@ -90,7 +94,7 @@ get "/users/:id" do
 		erb :user_info
 	rescue
 		flash[:notice] = "That user does not exist"
-		redirect "/"
+		redirect "/sign_in"
 	end
 end
  
@@ -115,7 +119,7 @@ post '/sign-in' do
 		redirect "/post"   
 	else     
 		flash[:alert] = "There was a problem signing you in."   
-		redirect "/"
+		redirect "/sign_in"
 	end   
 	 
 end
