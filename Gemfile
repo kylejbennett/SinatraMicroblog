@@ -8,10 +8,10 @@ gem 'rake'
 gem 'rack-flash3'
 
 group :production do
-	gem 'pg', '0.12.2'
+	gem 'pg'
 end
 
 group :development, :test do
-  gem 'sqlite3', '1.3.4'
+  gem 'sqlite3'
 end
 
