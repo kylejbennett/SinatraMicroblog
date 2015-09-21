@@ -1,6 +1,14 @@
-<h1>Our Blog Members</h1>
-<hr>
-<% @users.each do |user|%>
-	<a href="/userpage"><%= user.username%></a>
+
+<div class="bloggers">
+	<h1>Our Blog Members</h1>
 	<hr>
-<% end %>
+	<% @users.each do |user|%>
+		<h3>
+			<a href="/users/<%= user.id %>"><%= user.username %></a>
+		</h3>
+		<p>
+			-- Email: <%= user.email%>
+		</p>
+		<hr>
+	<% end %>
+</div>
