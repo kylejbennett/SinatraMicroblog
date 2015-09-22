@@ -4,10 +4,12 @@ require './models'
 require 'bundler/setup'
 require 'rack-flash'
 
+
 use Rack::Flash, :sweep => true
 
 set :sessions, true
 
+# set :database, "sqlite3:microdb.sqlite3"
 configure(:development){set :database, "sqlite3:microdb.sqlite3"}
 
 def current_user 
